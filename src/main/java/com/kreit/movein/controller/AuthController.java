@@ -67,7 +67,7 @@ public class AuthController {
         String hashedPassword = hexString.toString();
         AppUser appUser = appUserRepository.findByEmailIsAndPasswordIs(authentication.email(), hashedPassword).orElseThrow();
 
-        int authTokenExpirationInMilliSeconds = 3600000;
+        int authTokenExpirationInMilliSeconds = 1000 * 60 * 60 * 24; // 1 day
 
         return JwtTokenService.createAppUserAuthenticationJwt(appUser.getId(), authTokenExpirationInMilliSeconds);
     }

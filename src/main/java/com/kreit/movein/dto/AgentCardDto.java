@@ -6,6 +6,8 @@ public record AgentCardDto(
         String title,
         String profileImageInBase64,
         String mainTradeRegion,
-        String introduction
+        String introduction,
+        Float reviewScore,
+        Integer reviewCount
 ) {
 }

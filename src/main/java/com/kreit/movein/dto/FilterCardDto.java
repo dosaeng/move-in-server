@@ -1,11 +1,13 @@
 package com.kreit.movein.dto;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public record FilterCardDto(
@@ -40,11 +42,12 @@ public record FilterCardDto(
         String preferredRegion,
         @NotBlank
         String preferredVillage,
-        String favoritePlace1,
-        String favoritePlace2,
-        String favoritePlace3,
-        String itemHouseType,
-        String itemHouseCondition,
-        String itemWishList
+        List<String> favoritePlace1,
+        List<String> favoritePlace2,
+        List<String> favoritePlace3,
+        List<String> itemHouseType,
+        List<String> itemHouseCondition,
+        List<String> itemWishList,
+        String status
 ) {
 }

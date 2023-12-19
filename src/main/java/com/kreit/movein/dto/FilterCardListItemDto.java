@@ -5,29 +5,28 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public record FilterCardListItemDto(
-        int id,
-        @NotBlank
-        String name,
-        @NotBlank
-        String familyType,
-        @NotNull
-        @Positive
-        Long maximumDeposit,
-        @NotNull
-        @Positive
-        Long maximumMonthlyCost,
-        @NotNull
-        @Positive
-        Long minimumMonthlyCost,
-        @NotBlank
-        String costPreferenceType,
-        @NotBlank
-        String preferredRegion,
-        @NotBlank
-        String preferredVillage,
-        String itemHouseType,
-        Long recommendationCount
-) {
+public interface FilterCardListItemDto {
+    Integer getId();
+
+    String getName();
+
+    String getFamilyType();
+
+    Long getMaximumDeposit();
+
+    Long getMaximumMonthlyCost();
+
+    Long getMinimumMonthlyCost();
+
+    String getCostPreferenceType();
+
+    String getPreferredRegion();
+
+    String getPreferredVillage();
+
+    List<String> getItemHouseType();
+
+    Long getRecommendationCount();
 }
