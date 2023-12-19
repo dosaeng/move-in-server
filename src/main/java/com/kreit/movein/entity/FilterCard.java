@@ -1,5 +1,7 @@
 package com.kreit.movein.entity;
 
+import com.kreit.movein.dto.FilterCardDto;
+import com.kreit.movein.enumeration.FilterCardStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -54,18 +57,48 @@ public class FilterCard {
     private String preferredRegion;
     @Column
     private String preferredVillage;
-    @Column
-    private String favoritePlace1;
-    @Column
-    private String favoritePlace2;
-    @Column
-    private String favoritePlace3;
-    @Column
-    private String itemHouseType;
-    @Column
-    private String itemHouseCondition;
-    @Column
-    private String itemWishList;
-    @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT FALSE")
-    private Boolean isDone;
+    @ElementCollection
+    private List<String> favoritePlace1;
+    @ElementCollection
+    private List<String> favoritePlace2;
+    @ElementCollection
+    private List<String> favoritePlace3;
+    @ElementCollection
+    private List<String> itemHouseType;
+    @ElementCollection
+    private List<String> itemHouseCondition;
+    @ElementCollection
+    private List<String> itemWishList;
+    @Enumerated(EnumType.STRING)
+    private FilterCardStatusEnum status;
+
+    public void update(FilterCardDto dto) {
+        this.name = dto.name();
+        this.familyType = dto.familyType();
+        this.petPresence = dto.petPresence();
+        this.minimumSize = dto.minimumSize();
+        this.minimumRoomCount = dto.minimumRoomCount();
+        this.minimumMoveInDate = dto.minimumMoveInDate();
+        this.maximumMoveInDate = dto.maximumMoveInDate();
+        this.maximumDeposit = dto.maximumDeposit();
+        this.maximumMonthlyCost = dto.maximumMonthlyCost();
+        this.minimumMonthlyCost = dto.minimumMonthlyCost();
+        this.costPreferenceType = dto.costPreferenceType();
+        this.preferredRegion = dto.preferredRegion();
+        this.preferredVillage = dto.preferredVillage();
+        this.favoritePlace1 = dto.favoritePlace1();
+        this.favoritePlace2 = dto.favoritePlace2();
+        this.favoritePlace3 = dto.favoritePlace3();
+        this.itemHouseType = dto.itemHouseType();
+        this.itemHouseCondition = dto.itemHouseCondition();
+        this.itemWishList = dto.itemWishList();
+    }
+
+    public void open() {
+        this.status = FilterCardStatusEnum.OPEN;
+    }
+
+    public void close() {
+        this.status = FilterCardStatusEnum.CLOSE;
+    }
 }

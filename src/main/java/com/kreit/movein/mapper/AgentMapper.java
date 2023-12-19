@@ -24,7 +24,9 @@ public class AgentMapper {
                 entity.getTitle(),
                 profileImageBase64,
                 entity.getMainTradeRegion(),
-                entity.getIntroduction()
+                entity.getIntroduction(),
+                4.5f,
+                382
         );
     };
 }

@@ -3,6 +3,7 @@ package com.kreit.movein.mapper;
 import com.kreit.movein.dto.FilterCardDto;
 import com.kreit.movein.entity.AppUser;
 import com.kreit.movein.entity.FilterCard;
+import com.kreit.movein.enumeration.FilterCardStatusEnum;
 
 public class FilterCardMapper {
     public static FilterCard toEntity(FilterCardDto dto, int appUserId) {
@@ -27,6 +28,7 @@ public class FilterCardMapper {
                 .itemHouseCondition(dto.itemHouseCondition())
                 .itemWishList(dto.itemWishList())
                 .appUser(AppUser.builder().id(appUserId).build())
+                .status(FilterCardStatusEnum.CLOSE)
                 .build();
     }
 
@@ -51,7 +53,8 @@ public class FilterCardMapper {
                 entity.getFavoritePlace3(),
                 entity.getItemHouseType(),
                 entity.getItemHouseCondition(),
-                entity.getItemWishList()
+                entity.getItemWishList(),
+                entity.getStatus().getStr()
         );
     }
 }
