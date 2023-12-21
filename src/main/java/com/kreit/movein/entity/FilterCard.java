@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -126,6 +127,7 @@ public class FilterCard {
 
     public void open() {
         this.status = FilterCardStatusEnum.OPEN;
+        this.recommendationDueDate = LocalDate.now(ZoneId.of("Asia/Seoul")).plusDays(7);
     }
 
     public void close() {

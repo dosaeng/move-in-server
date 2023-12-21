@@ -23,6 +23,6 @@ public class AgentItemController {
     @GetMapping
     public List<ItemDto> getItemList(HttpServletRequest request){
         int agentUserId = (int) request.getAttribute("agentUserId");
-        return itemRepository.findAllByAgent_Id(agentUserId).stream().map(ItemMapper.toDtoFunction).collect(Collectors.toList());
+        return itemRepository.findAllByAgent_Id(agentUserId).stream().map(ItemMapper.toDtoFunction).toList();
     }
 }

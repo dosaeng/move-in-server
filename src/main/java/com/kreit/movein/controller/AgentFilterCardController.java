@@ -2,25 +2,23 @@ package com.kreit.movein.controller;
 
 import com.kreit.movein.dto.AgentRecommendationCardDto;
 import com.kreit.movein.dto.FilterCardDto;
+import com.kreit.movein.dto.AgentFilterCardListItemDto;
 import com.kreit.movein.dto.RecommendationDto;
 import com.kreit.movein.entity.Recommendation;
 import com.kreit.movein.enumeration.FilterCardStatusEnum;
 import com.kreit.movein.mapper.FilterCardMapper;
 import com.kreit.movein.mapper.RecommendationMapper;
-import com.kreit.movein.repository.AgentRepository;
 import com.kreit.movein.repository.FilterCardRepository;
-import com.kreit.movein.repository.ItemRepository;
 import com.kreit.movein.repository.RecommendationRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -31,9 +29,10 @@ public class AgentFilterCardController {
     private final FilterCardRepository filterCardRepository;
     private final RecommendationRepository recommendationRepository;
 
-    @GetMapping()
-    public List<FilterCardDto> getFilterCardList() {
-        return filterCardRepository.findAllByStatus(FilterCardStatusEnum.OPEN).stream().map(FilterCardMapper::toDto).collect(Collectors.toList());
+    @GetMapping
+    public List<AgentFilterCardListItemDto> getFilterCardList(HttpServletRequest request) {
+        int agentUserId = (int) request.getAttribute("agentUserId");
+        return filterCardRepository.findAllByStatus(FilterCardStatusEnum.OPEN, agentUserId).stream().toList();
     }
 
     @GetMapping("/{filterCardId}")
