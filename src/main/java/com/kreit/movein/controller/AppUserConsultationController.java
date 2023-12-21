@@ -36,6 +36,6 @@ public class AppUserConsultationController {
             ItemDto itemDto = ItemMapper.toDtoFunction.apply(entity.getRecommendation().getItem());
             AgentCardDto agentCardDto = AgentMapper.toCardDtoMapper.apply(entity.getRecommendation().getItem().getAgent());
             return ConsultationMapper.toCardDto(entity, itemDto,agentCardDto);
-        }).collect(Collectors.toList());
+        }).toList();
     }
 }

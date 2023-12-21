@@ -28,7 +28,7 @@ public class FilterCardMapper {
                 .itemHouseCondition(dto.itemHouseCondition())
                 .itemWishList(dto.itemWishList())
                 .appUser(AppUser.builder().id(appUserId).build())
-                .status(FilterCardStatusEnum.CLOSE)
+                .status(FilterCardStatusEnum.DEFAULT_CREATED)
                 .build();
     }
 

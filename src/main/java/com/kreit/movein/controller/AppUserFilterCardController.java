@@ -3,7 +3,6 @@ package com.kreit.movein.controller;
 import com.kreit.movein.dto.*;
 import com.kreit.movein.entity.Consultation;
 import com.kreit.movein.entity.FilterCard;
-import com.kreit.movein.entity.Item;
 import com.kreit.movein.entity.Recommendation;
 import com.kreit.movein.enumeration.ConsultationStatusEnum;
 import com.kreit.movein.mapper.*;
@@ -12,12 +11,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -87,7 +84,7 @@ public class AppUserFilterCardController {
     public List<RecommendedItemListDto> getRecommendationList(HttpServletRequest request, @PathVariable int filterCardId) {
         int appUserId = (int) request.getAttribute("appUserId");
         FilterCard filterCard = filterCardRepository.findByIdAndAppUser_Id(filterCardId, appUserId).orElseThrow();
-        return recommendationRepository.findAllByFilterCard_Id(filterCardId).stream().map(RecommendationMapper.toRecommendedItemMapper).collect(Collectors.toList());
+        return recommendationRepository.findAllByFilterCard_Id(filterCardId).stream().map(RecommendationMapper.toRecommendedItemMapper).toList();
     }
 
     @GetMapping("/{filterCardId}/recommendation/{recommendationId}")
