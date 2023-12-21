@@ -14,7 +14,8 @@ public class ConsultationMapper {
                 consultation.getRecommendation().getId(),
                 item,
                 agent,
-                consultation.getAppointmentDate()
+                consultation.getAppointmentDate(),
+                consultation.getRecommendation().getFilterCard().getId()
         );
     }
 }

@@ -71,6 +71,26 @@ public class FilterCard {
     private List<String> itemWishList;
     @Enumerated(EnumType.STRING)
     private FilterCardStatusEnum status;
+    @Column
+    private LocalDate recommendationDueDate;
+    @Column
+    private String toBusStopMinutes;
+    @Column
+    private String toTrainStationMinutes;
+    @Column
+    private String toTerminalMinutes;
+    @Column
+    private String parking;
+    @ElementCollection
+    private List<String> livingOptions;
+    @ElementCollection
+    private List<String> communityLife;
+    @ElementCollection
+    private List<String> livingInfra;
+    @ElementCollection
+    private List<String> educationLife;
+    @ElementCollection
+    private List<String> deliveryLife;
 
     public void update(FilterCardDto dto) {
         this.name = dto.name();
@@ -92,6 +112,16 @@ public class FilterCard {
         this.itemHouseType = dto.itemHouseType();
         this.itemHouseCondition = dto.itemHouseCondition();
         this.itemWishList = dto.itemWishList();
+        this.recommendationDueDate = dto.recommendationDueDate();
+        this.toBusStopMinutes = dto.toBusStopMinutes();
+        this.toTrainStationMinutes = dto.toTrainStationMinutes();
+        this.toTerminalMinutes = dto.toTerminalMinutes();
+        this.parking = dto.parking();
+        this.livingOptions = dto.livingOptions();
+        this.communityLife = dto.communityLife();
+        this.livingInfra = dto.livingInfra();
+        this.educationLife = dto.educationLife();
+        this.deliveryLife = dto.deliveryLife();
     }
 
     public void open() {

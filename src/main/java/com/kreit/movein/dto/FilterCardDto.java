@@ -48,6 +48,16 @@ public record FilterCardDto(
         List<String> itemHouseType,
         List<String> itemHouseCondition,
         List<String> itemWishList,
-        String status
+        String status,
+        LocalDate recommendationDueDate,
+        String toBusStopMinutes,
+        String toTrainStationMinutes,
+        String toTerminalMinutes,
+        String parking,
+        List<String> livingOptions,
+        List<String> communityLife,
+        List<String> livingInfra,
+        List<String> educationLife,
+        List<String> deliveryLife
 ) {
 }
