@@ -85,4 +85,21 @@ public class RecommendationMapper {
                 4.5f // temp
         );
     };
+
+    public static AgentRecommendationCardDto toAgentRecommendationCardDto(Recommendation recommendation, Item item){
+        return new AgentRecommendationCardDto(
+                recommendation.getId(),
+                item.getId(),
+                item.getName(),
+                item.getAddress(),
+                item.getDedicatedArea(),
+                item.getSupplyArea(),
+                item.getRoomCount(),
+                item.getToiletCount(),
+                item.getFloor(),
+                item.getDeposit(),
+                item.getMonthlyRent(),
+                item.getMinimumMoveInDate()
+        );
+    }
 }

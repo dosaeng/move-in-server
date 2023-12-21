@@ -54,7 +54,17 @@ public class FilterCardMapper {
                 entity.getItemHouseType(),
                 entity.getItemHouseCondition(),
                 entity.getItemWishList(),
-                entity.getStatus().getStr()
+                entity.getStatus().getStr(),
+                entity.getRecommendationDueDate(),
+                entity.getToBusStopMinutes(),
+                entity.getToTrainStationMinutes(),
+                entity.getToTerminalMinutes(),
+                entity.getParking(),
+                entity.getLivingOptions(),
+                entity.getCommunityLife(),
+                entity.getLivingInfra(),
+                entity.getEducationLife(),
+                entity.getDeliveryLife()
         );
     }
 }

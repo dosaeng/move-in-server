@@ -114,14 +114,4 @@ public class AppUserFilterCardController {
 
         return ConsultationMapper.toCardDto(consultation, itemDto, agentCardDto);
     }
-
-    @GetMapping("/{filterCardId}/recommendation/{recommendationId}/consultation")
-    public List<ConsultationCardDto> getConsultationList(HttpServletRequest request, @PathVariable int filterCardId, @PathVariable int recommendationId) {
-        int appUserId = (int) request.getAttribute("appUserId");
-        return recommendationRepository.findAllByFilterCard_Id(filterCardId).stream().filter(entity-> entity.getConsultation() != null).map(entity -> {
-            ItemDto itemDto = ItemMapper.toDtoFunction.apply(entity.getItem());
-            AgentCardDto agentCardDto = AgentMapper.toCardDtoMapper.apply(entity.getItem().getAgent());
-            return ConsultationMapper.toCardDto(entity.getConsultation(), itemDto,agentCardDto);
-        }).collect(Collectors.toList());
-    }
 }

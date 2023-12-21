@@ -10,6 +10,7 @@ public record ConsultationCardDto(
         Integer recommendationId,
         ItemDto item,
         AgentCardDto agent,
-        LocalDate appointmentDate
+        LocalDate appointmentDate,
+        Integer filterCardId
 ) {
 }

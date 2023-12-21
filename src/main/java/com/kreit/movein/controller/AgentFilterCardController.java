@@ -1,5 +1,6 @@
 package com.kreit.movein.controller;
 
+import com.kreit.movein.dto.AgentRecommendationCardDto;
 import com.kreit.movein.dto.FilterCardDto;
 import com.kreit.movein.dto.RecommendationDto;
 import com.kreit.movein.entity.Recommendation;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,5 +45,10 @@ public class AgentFilterCardController {
     public void doRecommendation(HttpServletRequest request, @RequestBody @Valid RecommendationDto dto){
         Recommendation recommendation = RecommendationMapper.toEntityMapper.apply(dto);
         recommendationRepository.save(recommendation);
+    }
+
+    @GetMapping("/{filterCardId}/recommendation")
+    public List<AgentRecommendationCardDto> getRecommendationList(@PathVariable int filterCardId){
+        return recommendationRepository.findAllByFilterCard_Id(filterCardId).stream().map(recommendation -> RecommendationMapper.toAgentRecommendationCardDto(recommendation, recommendation.getItem())).toList();
     }
 }
