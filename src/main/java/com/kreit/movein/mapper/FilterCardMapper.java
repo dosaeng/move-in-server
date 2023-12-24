@@ -29,6 +29,16 @@ public class FilterCardMapper {
                 .itemWishList(dto.itemWishList())
                 .appUser(AppUser.builder().id(appUserId).build())
                 .status(FilterCardStatusEnum.DEFAULT_CREATED)
+                .recommendationDueDate(dto.recommendationDueDate())
+                .toBusStopMinutes(dto.toBusStopMinutes())
+                .toTrainStationMinutes(dto.toTrainStationMinutes())
+                .toTerminalMinutes(dto.toTerminalMinutes())
+                .parking(dto.parking())
+                .livingOptions(dto.livingOptions())
+                .communityLife(dto.communityLife())
+                .livingInfra(dto.livingInfra())
+                .educationLife(dto.educationLife())
+                .deliveryLife(dto.deliveryLife())
                 .build();
     }
 
