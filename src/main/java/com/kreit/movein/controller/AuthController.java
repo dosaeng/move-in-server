@@ -7,6 +7,9 @@ import com.kreit.movein.dto.AuthenticationDto;
 import com.kreit.movein.entity.Agent;
 import com.kreit.movein.entity.AppUser;
 import com.kreit.movein.repository.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -14,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.MessageDigest;
@@ -29,7 +33,7 @@ public class AuthController {
 
     @SneakyThrows
     @PostMapping("/app-user")
-    public void signIn(@RequestBody @Valid AppUserDto appUserDto){
+    public void signIn(@RequestBody @Valid AppUserDto appUserDto) {
         String password = appUserDto.password();
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(password.getBytes());
@@ -52,9 +56,10 @@ public class AuthController {
 
     @SneakyThrows
     @PostMapping("/login")
-    public String login(
+    public void login(
+            HttpServletResponse response,
             @RequestBody AuthenticationDto authentication
-     ){
+    ) {
         String password = authentication.password();
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(password.getBytes());
@@ -68,15 +73,18 @@ public class AuthController {
         AppUser appUser = appUserRepository.findByEmailIsAndPasswordIs(authentication.email(), hashedPassword).orElseThrow();
 
         int authTokenExpirationInMilliSeconds = 1000 * 60 * 60 * 24; // 1 day
+        String token = JwtTokenService.createAppUserAuthenticationJwt(appUser.getId(), authTokenExpirationInMilliSeconds);
 
-        return JwtTokenService.createAppUserAuthenticationJwt(appUser.getId(), authTokenExpirationInMilliSeconds);
+        String cookie = String.format("token=%s; Path=/app-user-api; Secure; HttpOnly; SameSite=None", token);
+        response.addHeader("Set-Cookie", cookie);
     }
 
     @SneakyThrows
     @PostMapping("/login/agent")
-    public String loginAgent(
+    public void loginAgent(
+            HttpServletResponse response,
             @RequestBody AgentAuthenticationDto authentication
-    ){
+    ) {
         String password = authentication.password();
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(password.getBytes());
@@ -89,8 +97,11 @@ public class AuthController {
         String hashedPassword = hexString.toString();
         Agent agent = agentRepository.findByLoginIdIsAndPasswordIs(authentication.loginId(), hashedPassword).orElseThrow();
 
-        int authTokenExpirationInMilliSeconds = 3600000;
+        int authTokenExpirationInMilliSeconds = 1000 * 60 * 60 * 24; // 1 day
 
-        return JwtTokenService.createAgentUserAuthenticationJwt(agent.getId(), authTokenExpirationInMilliSeconds);
+        String token = JwtTokenService.createAgentUserAuthenticationJwt(agent.getId(), authTokenExpirationInMilliSeconds);
+
+        String cookie = String.format("token=%s; Path=/agent-api; Secure; HttpOnly; SameSite=None", token);
+        response.addHeader("Set-Cookie", cookie);
     }
 }
