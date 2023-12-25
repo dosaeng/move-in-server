@@ -24,6 +24,7 @@ public class AgentUserJwtFilter implements Filter {
             if (cookies == null) {
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
                 httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+                return;
             }
 
             for (Cookie cookie : cookies) {
