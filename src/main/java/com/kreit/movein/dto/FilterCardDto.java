@@ -9,9 +9,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public record FilterCardDto(
-        int id,
+        Integer id,
         @NotBlank
         String name,
         @NotBlank

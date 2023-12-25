@@ -1,6 +1,8 @@
 package com.kreit.movein.mapper;
 
+import com.kreit.movein.dto.AgentFilterCardListItemDto;
 import com.kreit.movein.dto.FilterCardDto;
+import com.kreit.movein.dto.FilterCardListItemDto;
 import com.kreit.movein.entity.AppUser;
 import com.kreit.movein.entity.FilterCard;
 import com.kreit.movein.enumeration.FilterCardStatusEnum;
@@ -75,6 +77,44 @@ public class FilterCardMapper {
                 entity.getLivingInfra(),
                 entity.getEducationLife(),
                 entity.getDeliveryLife()
+        );
+    }
+
+    public static FilterCardListItemDto toListItemDto(FilterCard entity, Long recommendationCount) {
+        return new FilterCardListItemDto(
+                entity.getId(),
+                entity.getName(),
+                entity.getFamilyType(),
+                entity.getMaximumDeposit(),
+                entity.getMaximumMonthlyCost(),
+                entity.getMinimumMonthlyCost(),
+                entity.getCostPreferenceType(),
+                entity.getPreferredRegion(),
+                entity.getPreferredVillage(),
+                entity.getItemHouseType(),
+                recommendationCount,
+                entity.getStatus(),
+                entity.getRecommendationDueDate()
+        );
+    }
+
+    public static AgentFilterCardListItemDto toAgentListItemDto(FilterCard entity, Long recommendationCount, Boolean didSuggestAlready, Boolean isConsultationRequested) {
+        return new AgentFilterCardListItemDto(
+                entity.getId(),
+                entity.getName(),
+                entity.getFamilyType(),
+                entity.getMaximumDeposit(),
+                entity.getMaximumMonthlyCost(),
+                entity.getMinimumMonthlyCost(),
+                entity.getCostPreferenceType(),
+                entity.getPreferredRegion(),
+                entity.getPreferredVillage(),
+                entity.getItemHouseType(),
+                recommendationCount,
+                entity.getStatus(),
+                entity.getRecommendationDueDate(),
+                didSuggestAlready,
+                isConsultationRequested
         );
     }
 }

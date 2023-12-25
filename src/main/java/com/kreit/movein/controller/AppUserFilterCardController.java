@@ -15,6 +15,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -30,6 +32,7 @@ public class AppUserFilterCardController {
     public FilterCardDto registerFilterCard(HttpServletRequest request, @RequestBody @Valid FilterCardDto body) {
         int appUserId = (int) request.getAttribute("appUserId");
         FilterCard filterCard = FilterCardMapper.toEntity(body, appUserId);
+        System.out.println(filterCard);
         filterCardRepository.save(filterCard);
         return FilterCardMapper.toDto(filterCard);
     }
@@ -37,7 +40,10 @@ public class AppUserFilterCardController {
     @GetMapping
     public List<FilterCardListItemDto> getFilterCardList(HttpServletRequest request) {
         int appUserId = (int) request.getAttribute("appUserId");
-        return filterCardRepository.findAllWithRecommendationCount(appUserId);
+        List<FilterCard> fcList = filterCardRepository.findAllByAppUser_Id(appUserId);
+        List<Integer> fcIds = fcList.stream().map(FilterCard::getId).toList();
+        Map<Integer, Long> aggregate = filterCardRepository.aggregateWithRecommendationCount(fcIds).stream().collect(Collectors.toMap(FilterCardRecommendationCountDto::filterCardId, FilterCardRecommendationCountDto::recommendationCount));
+        return fcList.stream().map(fc -> FilterCardMapper.toListItemDto(fc, aggregate.get(fc.getId()))).toList();
     }
 
     @GetMapping("/{filterCardId}")

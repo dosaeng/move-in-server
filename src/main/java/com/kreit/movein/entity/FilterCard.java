@@ -3,13 +3,9 @@ package com.kreit.movein.entity;
 import com.kreit.movein.dto.FilterCardDto;
 import com.kreit.movein.enumeration.FilterCardStatusEnum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +16,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class FilterCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
