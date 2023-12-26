@@ -18,6 +18,11 @@ public class AppUserJwtFilter implements Filter {
             boolean validated = false;
             HttpServletRequest httpRequest = (HttpServletRequest) request;
 
+            if ("OPTIONS".equalsIgnoreCase(httpRequest.getMethod())) {
+                chain.doFilter(request, response);
+                return;
+            }
+
             // 토큰
             Cookie[] cookies = httpRequest.getCookies();
             if (cookies == null) {

@@ -2,9 +2,12 @@ package com.kreit.movein.config;
 
 import com.kreit.movein.auth.AgentUserJwtFilter;
 import com.kreit.movein.auth.AppUserJwtFilter;
+import jakarta.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.EnumSet;
 
 @Configuration
 public class FilterConfig {
