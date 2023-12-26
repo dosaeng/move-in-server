@@ -22,6 +22,6 @@ public interface FilterCardRepository extends JpaRepository<FilterCard, Integer>
     @Query("SELECT new com.kreit.movein.dto.FilterCardRecommendationCountDto(fc.id, COUNT(rc)) FROM FilterCard fc LEFT JOIN fc.recommendations rc WHERE fc.id IN (:filterCardIds) GROUP BY fc.id")
     List<FilterCardRecommendationCountDto> aggregateWithRecommendationCount(Collection<Integer> filterCardIds);
 
-    @Query("SELECT new com.kreit.movein.dto.FilterCardSuggestionConsultationDto(fc.id, CASE WHEN COUNT(i) > 0 THEN TRUE ELSE FALSE END, CASE WHEN COUNT(c) > 0 THEN TRUE ELSE FALSE END)   FROM FilterCard fc LEFT JOIN fc.recommendations rc LEFT JOIN rc.item i LEFT JOIN rc.consultation c WHERE fc.id IN (:filterCardIds) AND i.agent.id = :agentId GROUP BY fc.id")
+    @Query("SELECT new com.kreit.movein.dto.FilterCardSuggestionConsultationDto(fc.id, CASE WHEN COUNT(i) > 0 THEN TRUE ELSE FALSE END, CASE WHEN COUNT(c) > 0 THEN TRUE ELSE FALSE END) FROM FilterCard fc LEFT JOIN fc.recommendations rc LEFT JOIN rc.item i LEFT JOIN rc.consultation c WHERE fc.id IN (:filterCardIds) AND (i.agent.id = :agentId OR i IS NULL) GROUP BY fc.id")
     List<FilterCardSuggestionConsultationDto> aggregateWithSuggestionAndConsultation(Collection<Integer> filterCardIds, int agentId);
 }
